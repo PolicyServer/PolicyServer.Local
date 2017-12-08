@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Secure";
+}
+
+@{
+    var roles = (IEnumerable<string>)ViewData["roles"];
+    var perms = (IEnumerable<string>)ViewData["perms"];
+}
+
+<h1>Current User Claims</h1>
+@foreach (var id in User.Identities)
+{
+    <h3>Scheme: @id.AuthenticationType</h3>
+    <dl>
+        @foreach (var claim in id.Claims)
+        {
+            <dt>@claim.Type</dt>
+            <dd>@claim.Value</dd>
+        }
+    </dl>
+}
+
+<h1>Policy Results</h1>
+@if (roles != null)
+{
+    <h2>Roles</h2>
+    <ul>
+        @foreach (var role in roles)
+        {
+            <li>@role</li>
+        }
+    </ul>
+}
+
+@if (perms != null)
+{
+    <h2>Permission</h2>
+    <ul>
+        @foreach (var perm in perms)
+        {
+            <li>@perm</li>
+        }
+    </ul>
+}

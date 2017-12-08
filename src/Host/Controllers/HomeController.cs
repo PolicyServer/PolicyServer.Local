@@ -1,26 +1,32 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Host.Models;
+using Microsoft.AspNetCore.Authorization;
+using PolicyServerLocal;
 
 namespace Host.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly Policy _policy;
+
+        public HomeController(Policy policy)
+        {
+            _policy = policy;
+        }
+
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult Secure()
         {
-            ViewData["Message"] = "Your application description page.";
+            var result = _policy.Evaluate(User);
 
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["roles"] = result.Roles;
+            ViewData["perms"] = result.Permissions;
 
             return View();
         }

@@ -1,13 +1,16 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using PolicyServerLocal;
 
-namespace PolicyServerLocal
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddPolicyServerClient(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<Policy>(configuration);
+            var policy = new Policy();
+            configuration.Bind(policy);
+
+            services.AddSingleton(policy);
 
             return services;
         }
