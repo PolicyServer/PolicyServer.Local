@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Xunit;
 
@@ -16,12 +17,12 @@ namespace PolicyServerLocal.Tests
         [Fact]
         public void Evaluate_should_require_user()
         {
-            Action a = () => _subject.EvaluateAsync(null);
+            Func<Task> a = () => _subject.EvaluateAsync(null);
             a.ShouldThrow<ArgumentNullException>();
         }
 
         [Fact]
-        public void Evaluate_should_return_matched_roles()
+        public async Task Evaluate_should_return_matched_roles()
         {
             _subject.Roles.AddRange(new [] {
                 new Role{ Name = "c", Subjects = { "1" } },
@@ -31,13 +32,13 @@ namespace PolicyServerLocal.Tests
 
             var user = TestUser.Create("1");
 
-            var result = _subject.EvaluateAsync(user);
+            var result = await _subject.EvaluateAsync(user);
 
             result.Roles.ShouldAllBeEquivalentTo(new[] { "a", "c" });
         }
 
         [Fact]
-        public void Evaluate_should_not_return_unmatched_roles()
+        public async Task Evaluate_should_not_return_unmatched_roles()
         {
             _subject.Roles.AddRange(new[] {
                 new Role{ Name = "c", Subjects = { "2" } },
@@ -47,13 +48,13 @@ namespace PolicyServerLocal.Tests
 
             var user = TestUser.Create("1");
 
-            var result = _subject.EvaluateAsync(user);
+            var result = await _subject.EvaluateAsync(user);
 
             result.Roles.Should().BeEmpty();
         }
 
         [Fact]
-        public void Evaluate_should_return_remove_duplicate_roles()
+        public async Task Evaluate_should_return_remove_duplicate_roles()
         {
             _subject.Roles.AddRange(new[] {
                 new Role{ Name = "a", Subjects = { "1" } },
@@ -62,13 +63,13 @@ namespace PolicyServerLocal.Tests
 
             var user = TestUser.Create("1");
 
-            var result = _subject.EvaluateAsync(user);
+            var result = await _subject.EvaluateAsync(user);
 
             result.Roles.ShouldAllBeEquivalentTo(new[] { "a" });
         }
 
         [Fact]
-        public void Evaluate_should_return_matched_permissions()
+        public async Task Evaluate_should_return_matched_permissions()
         {
             _subject.Roles.AddRange(new[] {
                 new Role{ Name = "role", Subjects = { "1" } },
@@ -82,13 +83,13 @@ namespace PolicyServerLocal.Tests
 
             var user = TestUser.Create("1");
 
-            var result = _subject.EvaluateAsync(user);
+            var result = await _subject.EvaluateAsync(user);
 
             result.Permissions.ShouldAllBeEquivalentTo(new[] { "a", "c" });
         }
 
         [Fact]
-        public void Evaluate_should_not_return_unmatched_permissions()
+        public async Task Evaluate_should_not_return_unmatched_permissions()
         {
             _subject.Roles.AddRange(new[] {
                 new Role{ Name = "role", Subjects = { "1" } },
@@ -101,13 +102,13 @@ namespace PolicyServerLocal.Tests
 
             var user = TestUser.Create("1");
 
-            var result = _subject.EvaluateAsync(user);
+            var result = await _subject.EvaluateAsync(user);
 
             result.Permissions.Should().BeEmpty();
         }
 
         [Fact]
-        public void Evaluate_should_remove_duplicate_permissions()
+        public async Task Evaluate_should_remove_duplicate_permissions()
         {
             _subject.Roles.AddRange(new[] {
                 new Role{ Name = "role", Subjects = { "1" } },
@@ -119,13 +120,13 @@ namespace PolicyServerLocal.Tests
 
             var user = TestUser.Create("1");
 
-            var result = _subject.EvaluateAsync(user);
+            var result = await _subject.EvaluateAsync(user);
 
             result.Permissions.ShouldAllBeEquivalentTo(new[] { "a" });
         }
 
         [Fact]
-        public void Evaluate_should_not_allow_identity_roles_to_match_permissions()
+        public async Task Evaluate_should_not_allow_identity_roles_to_match_permissions()
         {
             _subject.Permissions.AddRange(new[] {
                 new Permission{ Name = "perm", Roles = { "role" } },
@@ -133,7 +134,7 @@ namespace PolicyServerLocal.Tests
 
             var user = TestUser.Create("1", roles:new[] { "role" });
 
-            var result = _subject.EvaluateAsync(user);
+            var result = await _subject.EvaluateAsync(user);
 
             result.Permissions.Should().BeEmpty();
         }
