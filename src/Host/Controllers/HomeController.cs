@@ -3,14 +3,15 @@ using Microsoft.AspNetCore.Mvc;
 using Host.Models;
 using Microsoft.AspNetCore.Authorization;
 using PolicyServerLocal;
+using System.Threading.Tasks;
 
 namespace Host.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly Policy _policy;
+        private readonly PolicyServerClient _policy;
 
-        public HomeController(Policy policy)
+        public HomeController(PolicyServerClient policy)
         {
             _policy = policy;
         }
@@ -21,9 +22,9 @@ namespace Host.Controllers
             return View();
         }
 
-        public IActionResult Secure()
+        public async Task<IActionResult> Secure()
         {
-            var result = _policy.Evaluate(User);
+            var result = await _policy.EvaluateAsync(User);
 
             ViewData["roles"] = result.Roles;
             ViewData["perms"] = result.Permissions;

@@ -6,17 +6,17 @@ namespace PolicyServerLocal.Tests
 {
     public class PolicyTests
     {
-        Policy _subject;
+        PolicyServerClient _subject;
 
         public PolicyTests()
         {
-            _subject = new Policy();
+            _subject = new PolicyServerClient();
         }
 
         [Fact]
         public void Evaluate_should_require_user()
         {
-            Action a = () => _subject.Evaluate(null);
+            Action a = () => _subject.EvaluateAsync(null);
             a.ShouldThrow<ArgumentNullException>();
         }
 
@@ -31,7 +31,7 @@ namespace PolicyServerLocal.Tests
 
             var user = TestUser.Create("1");
 
-            var result = _subject.Evaluate(user);
+            var result = _subject.EvaluateAsync(user);
 
             result.Roles.ShouldAllBeEquivalentTo(new[] { "a", "c" });
         }
@@ -47,7 +47,7 @@ namespace PolicyServerLocal.Tests
 
             var user = TestUser.Create("1");
 
-            var result = _subject.Evaluate(user);
+            var result = _subject.EvaluateAsync(user);
 
             result.Roles.Should().BeEmpty();
         }
@@ -62,7 +62,7 @@ namespace PolicyServerLocal.Tests
 
             var user = TestUser.Create("1");
 
-            var result = _subject.Evaluate(user);
+            var result = _subject.EvaluateAsync(user);
 
             result.Roles.ShouldAllBeEquivalentTo(new[] { "a" });
         }
@@ -82,7 +82,7 @@ namespace PolicyServerLocal.Tests
 
             var user = TestUser.Create("1");
 
-            var result = _subject.Evaluate(user);
+            var result = _subject.EvaluateAsync(user);
 
             result.Permissions.ShouldAllBeEquivalentTo(new[] { "a", "c" });
         }
@@ -101,7 +101,7 @@ namespace PolicyServerLocal.Tests
 
             var user = TestUser.Create("1");
 
-            var result = _subject.Evaluate(user);
+            var result = _subject.EvaluateAsync(user);
 
             result.Permissions.Should().BeEmpty();
         }
@@ -119,7 +119,7 @@ namespace PolicyServerLocal.Tests
 
             var user = TestUser.Create("1");
 
-            var result = _subject.Evaluate(user);
+            var result = _subject.EvaluateAsync(user);
 
             result.Permissions.ShouldAllBeEquivalentTo(new[] { "a" });
         }
@@ -133,7 +133,7 @@ namespace PolicyServerLocal.Tests
 
             var user = TestUser.Create("1", roles:new[] { "role" });
 
-            var result = _subject.Evaluate(user);
+            var result = _subject.EvaluateAsync(user);
 
             result.Permissions.Should().BeEmpty();
         }

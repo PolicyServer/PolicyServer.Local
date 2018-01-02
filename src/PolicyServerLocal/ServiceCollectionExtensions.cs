@@ -7,7 +7,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddPolicyServerClient(this IServiceCollection services, IConfiguration configuration)
         {
-            var policy = new Policy();
+            var policy = new PolicyServerClient();
             configuration.Bind(policy);
 
             services.AddSingleton(policy);

@@ -2,15 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace PolicyServerLocal
 {
-    public class Policy
+    public class PolicyServerClient
     {
         public List<Role> Roles { get; set; } = new List<Role>();
         public List<Permission> Permissions { get; set; } = new List<Permission>();
 
-        public PolicyResult Evaluate(ClaimsPrincipal user)
+        public async Task<bool> IsInRoleAsync(ClaimsPrincipal user, string role)
+        {
+            var policy = await EvaluateAsync(user);
+            return policy.Roles.Contains(role);
+        }
+
+        public async Task<bool> HasPermissionAsync(ClaimsPrincipal user, string permission)
+        {
+            var policy = await EvaluateAsync(user);
+            return policy.Permissions.Contains(permission);
+        }
+
+        public Task<PolicyResult> EvaluateAsync(ClaimsPrincipal user)
         {
             if (user == null) throw new ArgumentNullException(nameof(user));
 
@@ -23,7 +36,7 @@ namespace PolicyServerLocal
                 Permissions = permissions.Distinct()
             };
 
-            return result;
+            return Task.FromResult(result);
         }
     }
 }
