@@ -30,7 +30,9 @@ namespace Host
             services.AddAuthentication("Cookies")
                .AddCookie("Cookies");
 
-            services.AddPolicyServerClient(Configuration.GetSection("Policy"));
+            services.AddPolicyServerClient(Configuration.GetSection("Policy"))
+                //.AddAuthorizationPermissionPolicies()
+                ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +48,7 @@ namespace Host
             }
 
             app.UseAuthentication();
+            //app.UsePolicyServerClaimsTransformation();
 
             app.UseStaticFiles();
 

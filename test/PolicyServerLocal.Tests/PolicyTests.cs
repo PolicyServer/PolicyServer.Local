@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Threading.Tasks;
 using FluentAssertions;
+using PolicyServer.Local;
 using Xunit;
 
 namespace PolicyServerLocal.Tests
 {
     public class PolicyTests
     {
-        PolicyServerClient _subject;
+        Policy _subject;
 
         public PolicyTests()
         {
-            _subject = new PolicyServerClient();
+            _subject = new Policy();
         }
 
         [Fact]

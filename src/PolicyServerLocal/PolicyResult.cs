@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PolicyServerLocal
+namespace PolicyServer.Client
 {
     public class PolicyResult
     {

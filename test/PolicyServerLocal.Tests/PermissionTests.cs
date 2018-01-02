@@ -1,5 +1,6 @@
 ﻿using System;
 using FluentAssertions;
+using PolicyServer.Local;
 using Xunit;
 
 namespace PolicyServerLocal.Tests

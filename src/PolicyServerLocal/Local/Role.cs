@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
-namespace PolicyServerLocal
+namespace PolicyServer.Local
 {
     public class Role
     {
@@ -12,7 +12,7 @@ namespace PolicyServerLocal
         public List<string> Subjects { get; set; } = new List<string>();
         public List<string> IdentityRoles { get; set; } = new List<string>();
 
-        public bool Evaluate(ClaimsPrincipal user)
+        internal bool Evaluate(ClaimsPrincipal user)
         {
             if (user == null) throw new ArgumentNullException(nameof(user));
 

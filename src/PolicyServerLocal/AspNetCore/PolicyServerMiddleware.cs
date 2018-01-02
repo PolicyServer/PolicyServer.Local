@@ -2,9 +2,9 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using PolicyServerLocal;
+using PolicyServer.Client;
 
-namespace PolicyServer.Client
+namespace PolicyServer.AspNetCore
 {
     public class PolicyServerMiddleware
     {

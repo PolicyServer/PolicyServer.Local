@@ -1,4 +1,4 @@
-﻿using PolicyServer.Client;
+﻿using PolicyServer.AspNetCore;
 
 namespace Microsoft.AspNetCore.Builder
 {

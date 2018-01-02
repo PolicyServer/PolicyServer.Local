@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
+using PolicyServer.AspNetCore;
 using PolicyServer.Client;
-using PolicyServerLocal;
+using PolicyServer.Local;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -8,10 +9,11 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static PolicyServerBuilder AddPolicyServerClient(this IServiceCollection services, IConfiguration configuration)
         {
-            var policy = new PolicyServerClient();
+            var policy = new Policy();
             configuration.Bind(policy);
 
             services.AddSingleton(policy);
+            services.AddTransient<PolicyServerClient>();
 
             return new PolicyServerBuilder(services);
         }

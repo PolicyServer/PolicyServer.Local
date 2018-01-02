@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace PolicyServer.Client
+namespace PolicyServer.AspNetCore
 {
     public class PolicyServerBuilder
     {

@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PolicyServerLocal
+namespace PolicyServer.Local
 {
     public class Permission
     {
         public string Name { get; set; }
         public List<string> Roles { get; set; } = new List<string>();
 
-        public bool Evaluate(IEnumerable<string> roles)
+        internal bool Evaluate(IEnumerable<string> roles)
         {
             if (roles == null) throw new ArgumentNullException(nameof(roles));
 
