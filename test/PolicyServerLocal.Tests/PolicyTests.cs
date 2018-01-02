@@ -125,7 +125,7 @@ namespace PolicyServerLocal.Tests
         }
 
         [Fact]
-        public void Evaluate_should_allow_identity_roles_to_match_permissions()
+        public void Evaluate_should_not_allow_identity_roles_to_match_permissions()
         {
             _subject.Permissions.AddRange(new[] {
                 new Permission{ Name = "perm", Roles = { "role" } },
@@ -135,7 +135,7 @@ namespace PolicyServerLocal.Tests
 
             var result = _subject.Evaluate(user);
 
-            result.Permissions.ShouldAllBeEquivalentTo(new[] { "perm" });
+            result.Permissions.Should().BeEmpty();
         }
     }
 }

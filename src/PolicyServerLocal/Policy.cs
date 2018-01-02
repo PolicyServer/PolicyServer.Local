@@ -15,9 +15,7 @@ namespace PolicyServerLocal
             if (user == null) throw new ArgumentNullException(nameof(user));
 
             var roles = Roles.Where(x=>x.Evaluate(user)).Select(x=>x.Name).ToArray();
-
-            var combinedRoles = roles.Union(user.FindAll("role").Select(x => x.Value));
-            var permissions = Permissions.Where(x => x.Evaluate(combinedRoles)).Select(x => x.Name).ToArray();
+            var permissions = Permissions.Where(x => x.Evaluate(roles)).Select(x => x.Name).ToArray();
 
             var result = new PolicyResult()
             {
