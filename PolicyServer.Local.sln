@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{25D18EFB-6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolicyServerLocal.Tests", "test\PolicyServerLocal.Tests\PolicyServerLocal.Tests.csproj", "{EF40A197-4540-43BD-BBFE-D7C35316E089}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolicyServerLocal", "src\PolicyServerLocal\PolicyServerLocal.csproj", "{B2AAF1C5-C4D8-4867-94A9-EE3C76804561}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolicyServer.Local", "src\PolicyServer.Local\PolicyServer.Local.csproj", "{B2AAF1C5-C4D8-4867-94A9-EE3C76804561}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

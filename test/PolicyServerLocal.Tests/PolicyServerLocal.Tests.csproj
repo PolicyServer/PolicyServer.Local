@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\PolicyServerLocal\PolicyServerLocal.csproj" />
+    <ProjectReference Include="..\..\src\PolicyServer.Local\PolicyServer.Local.csproj" />
   </ItemGroup>
 
 </Project>
