@@ -40,7 +40,7 @@ namespace Host.Controllers
             return View("success");
         }
 
-        // our preferred approach is to use the authorizatio policy system in ASP.NET Core
+        // the preferred approach is to use the authorization policy system in ASP.NET Core
         // if you add the AuthorizationPermissionPolicies service, policy names are automatically mapped to permissions
         [Authorize("PerformSurgery")]
         public async Task<IActionResult> PerformSurgery()
