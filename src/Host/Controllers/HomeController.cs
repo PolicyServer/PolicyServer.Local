@@ -10,11 +10,11 @@ namespace Host.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly PolicyServerClient _policy;
+        private readonly PolicyServerClient _client;
 
-        public HomeController(PolicyServerClient policy)
+        public HomeController(PolicyServerClient client)
         {
-            _policy = policy;
+            _client = client;
         }
 
         [AllowAnonymous]
@@ -25,12 +25,30 @@ namespace Host.Controllers
 
         public async Task<IActionResult> Secure()
         {
-            var result = await _policy.EvaluateAsync(User);
+            var result = await _client.EvaluateAsync(User);
             return View(result);
         }
 
-        //[Authorize(Roles="doctor,nurse")]
-        //[Authorize("SeePatients")]
+        // if you are using the UsePolicyServerClaimsTransformation middleware, roles are mapped to claims
+        // this allows using the classic authorize attribute
+        [Authorize(Roles = "nurse")]
+        public async Task<IActionResult> NursesOnly()
+        {
+            // can also use the client library imperatively
+            var isNurse = await _client.IsInRoleAsync(User, "nurse");
 
+            return View("success");
+        }
+
+        // our preferred approach is to use the authorizatio policy system in ASP.NET Core
+        // if you add the AuthorizationPermissionPolicies service, policy names are automatically mapped to permissions
+        [Authorize("PerformSurgery")]
+        public async Task<IActionResult> PerformSurgery()
+        {
+            // or imperatively
+            var canPerformSurgery = await _client.HasPermissionAsync(User, "PerformSurgery");
+
+            return View("success");
+        }
     }
 }
