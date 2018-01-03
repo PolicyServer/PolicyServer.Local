@@ -1,4 +1,7 @@
-﻿using System.Diagnostics;
+﻿// Copyright (c) Brock Allen, Dominick Baier, Michele Leroux Bustamante. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Host.Models;
 using Microsoft.AspNetCore.Authorization;

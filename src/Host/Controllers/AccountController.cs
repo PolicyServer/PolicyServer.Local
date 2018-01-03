@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) Brock Allen, Dominick Baier, Michele Leroux Bustamante. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
@@ -20,7 +23,7 @@ namespace Host.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(string userName, string password, string returnUrl = null)
+        public async Task<IActionResult> Login(string userName, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
 
@@ -57,7 +60,7 @@ namespace Host.Controllers
                 var id = new ClaimsIdentity(claims, "password", "name", "role");
                 var p = new ClaimsPrincipal(id);
 
-                await HttpContext.SignInAsync("Cookies", p);
+                await HttpContext.SignInAsync(p);
                 return LocalRedirect(returnUrl);
             }
 
@@ -66,7 +69,7 @@ namespace Host.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync("Cookies");
+            await HttpContext.SignOutAsync();
             return Redirect("/");
         }
     }
