@@ -13,8 +13,6 @@ namespace Host.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
-        public IActionResult AccessDenied() => View();
-
         [HttpGet]
         public IActionResult Login(string returnUrl = null)
         {
@@ -52,8 +50,9 @@ namespace Host.Controllers
                     claims = new List<Claim>
                     {
                         new Claim("sub", "21"),
-                        new Claim("name", "Neither Alice, nor Bob"),
-                        new Claim("temperature", "101"),
+                        new Claim("name", userName),
+                        new Claim("sick", "very"),
+                        new Claim("role", "customer")
                     };
                 }
 
@@ -72,5 +71,7 @@ namespace Host.Controllers
             await HttpContext.SignOutAsync();
             return Redirect("/");
         }
+
+        public IActionResult AccessDenied() => View();
     }
 }

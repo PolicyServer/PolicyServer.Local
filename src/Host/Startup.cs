@@ -23,32 +23,33 @@ namespace Host
         {
             services.AddMvc(options =>
             {
+                // this sets up a default authorization policy for the application
+                // in this case, authenticated users are required (besides controllers/actions that have [AllowAnonymous]
                 var policy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
                     .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             });
 
+            // this sets up authentication - for this demo we simply use a local cookie
+            // typically authentication would be done using an external provider
             services.AddAuthentication("Cookies")
                 .AddCookie("Cookies");
 
+            // this sets up the PolicyServer client library and policy provider - configuration is loaded from appsettings.json
             services.AddPolicyServerClient(Configuration.GetSection("Policy"))
                 .AddAuthorizationPermissionPolicies();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
-
+            app.UseDeveloperExceptionPage();
             app.UseAuthentication();
-            //app.UsePolicyServerClaimsTransformation();
+
+            // add this middleware to make roles and permissions available as claims
+            // this is mainly useful for using the classic [Authorize(Roles="foo")] and IsInRole functionality
+            // this is not needed if you use the client library directly or the new policy-based authorization framework in ASP.NET Core
+            app.UsePolicyServerClaimsTransformation();
 
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
