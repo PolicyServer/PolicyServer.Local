@@ -1,7 +1,10 @@
 # PolicyServer (local version)
-This repo contains a simple implementation of separation of concerns between authentication and authorization pattern that we describe here and here....
+We've been talking about separation of concerns of authentication and authorization quite a bit in the past (see here...and here).
+This lead to a commercial product called PolicyServer (see here).
 
-This library is a simplified version of the commercial PolicyServer product and does not support advanced features like hierarchical policies, client/server separation, management APIs, caching, auditing etc.
+This repo contains a simplified version of PolicyServer, but has all the necessary code to implement the authorization pattern we are recommending.
+
+This library does not have the advanced features of PolicyServer like hierarchical policies, client/server separation, management APIs, caching, auditing etc.
 
 ## Defining an authorization policy
 The authorization policy is defined as a JSON document (typically in `appsettings.json`). In the policy you can define two things
