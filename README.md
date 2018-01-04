@@ -15,7 +15,7 @@ The authorization policy is defined as a JSON document (typically in `appsetting
 ### Defining application roles
 Role membership can be defined based on the IDs (aka subject IDs) of the users, e.g.:
 
-```json
+```javascript
 {
   "Policy": {
     "roles": [
@@ -32,7 +32,7 @@ The value of the `sub` claim is used to determine role membership at runtime.
 
 Additionally identity roles coming from the authentication system can be mapped to application roles, e.g.:
 
-```json
+```javascript
 {
   "Policy": {
     "roles": [
@@ -50,7 +50,7 @@ The value of the `role` claim is used to map identity roles to application roles
 ### Mapping permissions to application roles
 In the permissions element you can define permissions, and which roles they are mapped to:
 
-```json
+```javascript
 {
   "Policy": {
     "roles": [
