@@ -1,16 +1,16 @@
 # PolicyServer (local version)
 We've been talking about separation of concerns of authentication and authorization quite a bit in the past (see here...and here).
-This lead to a commercial product called PolicyServer (see here).
+As a result, we have developed a commercial product called PolicyServer (see here).
 
-This repo contains a simplified version of PolicyServer, but has all the necessary code to implement the authorization pattern we are recommending.
+This repository contains a free, open source, and simplified version of the PolicyServer product, but has all the necessary code to implement the authorization pattern we are recommending.
 
-This library does not have the advanced features of PolicyServer like hierarchical policies, client/server separation, management APIs, caching, auditing etc., but is syntax-compatible with its "big brother". This allows upgrading if you want without having to change your code.
+This open source library does not have the advanced features of the PolicyServer product like hierarchical policies, client/server separation, management APIs and UI, caching, auditing etc., but is syntax-compatible with its "big brother". This allows an upgrade path with minimal code changes.
 
 ## Defining an authorization policy
 The authorization policy is defined as a JSON document (typically in `appsettings.json`). In the policy you can define two things
 
-* application roles (and who are the members of these roles)
-* mapping of roles to permissions
+* application roles (and the users that are members of these roles)
+* application permissions (and which application roles have these permissions)
 
 ### Defining application roles
 Role membership can be defined based on the IDs (aka subject IDs) of the users, e.g.:
@@ -28,7 +28,7 @@ Role membership can be defined based on the IDs (aka subject IDs) of the users, 
 }
 ```
 
-The value of the `sub` claim is used to determine role membership at runtime.
+The value of the user's `sub` claim is used to determine role membership at runtime.
 
 Additionally identity roles coming from the authentication system can be mapped to application roles, e.g.:
 
@@ -45,7 +45,7 @@ Additionally identity roles coming from the authentication system can be mapped 
 }
 ```
 
-The value of the `role` claim is used to map identity roles to application roles.
+The user's `role` claims are used to map identity roles to application roles.
 
 ### Mapping permissions to application roles
 In the permissions element you can define permissions, and which roles they are mapped to:
@@ -98,7 +98,7 @@ Fist, you need to register the PolicyServer client with the DI system. This is w
 services.AddPolicyServerClient(Configuration.GetSection("Policy"));
 ```
 
-After that you can inject the `PolicyServerClient` into your application code, e.g.:
+After that you can inject the `PolicyServerClient` anywhere into your application code, e.g.:
 
 ```csharp
 public class HomeController : Controller
@@ -114,8 +114,8 @@ public class HomeController : Controller
 
 `PolicyServerClient` has three methods:
 
-* `EvaluateAsync` - returns roles and permissions for a given user.
-* `IsInRoleAsync` - queries for a specific role
+* `EvaluateAsync` - returns application roles and permissions for a given user.
+* `IsInRoleAsync` - queries for a specific application role
 * `HasPermissionAsync` - queries for a specific permission
 
 ```csharp
@@ -136,13 +136,12 @@ public async Task<IActionResult> Secure()
 }
 ```
 
-You can now this simple client library directly, or build higher level abstractions for your applications.
+You can now use this simple client library directly, or build higher level abstractions for your applications.
 
 ## Mapping permissions and application roles to user claims
-Instead of using the our client library directly, you can also turn the permissions and application roles into user claims.
-This is mainly useful if you want to use the standard `ClaimsPrincipal`-based APIs or the class `[Authorize(Roles = "...")]` attribute.
+Instead of using the `PolicyServerClient` class directly, you might prefer a programming model where the current user's claims are automatically populated with the policy's application roles and permissions. This is mainly useful if you want to use the standard `ClaimsPrincipal`-based APIs or the `[Authorize(Roles = "...")]` attribute.
 
-We provide a middleware for this purpose, which runs on every request and turns the user's authorization data into claims:
+A middleware (registered with `UsePolicyServerClaimsTransformation`) is provided for this purpose, and runs on every request to map the user's authorization data into claims:
 
 ```csharp
 public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -155,7 +154,7 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 }
 ```
 
-This way you could query roles or permissions like this:
+Then in the application code you could query application roles or permissions like this:
 
 ```csharp
 // get all roles
