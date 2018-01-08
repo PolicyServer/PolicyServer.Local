@@ -8,9 +8,9 @@
     <Description>free OSS version of PolicyServer</Description>
     <PackageId>PolicyServer.Local</PackageId>
     <PackageTags>Authorization;Roles;Permissions</PackageTags>
-    <!--<PackageIconUrl>https://raw.githubusercontent.com/PolicyServer/Artwork/master/Logos/IDserver_icon128.jpg</PackageIconUrl>-->
+    <PackageIconUrl>http://policyserver.io/images/shield64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/PolicyServer/PolicyServer.Local</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/PolicyServer/PolicyServer.Local/blob/dev/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl>https://github.com/PolicyServer/PolicyServer.Local/blob/release/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
   <PropertyGroup>
