@@ -18,8 +18,7 @@ namespace Microsoft.AspNetCore.Builder
         /// <returns></returns>
         public static IApplicationBuilder UsePolicyServerClaimsTransformation(this IApplicationBuilder app)
         {
-            app.UseMiddleware<PolicyServerMiddleware>();
-            return app;
+            return app.UseMiddleware<PolicyServerMiddleware>();
         }
     }
 }

@@ -33,9 +33,6 @@ namespace Microsoft.AspNetCore.Authorization
         }
 
 
-        //public static AuthorizationPolicy Allowed { get; set; } = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-        //public static AuthorizationPolicy Denied { get; set; } = new AuthorizationPolicyBuilder().RequireAssertion(c=>false).Build();
-
         /// <summary>
         /// Gets a <see cref="T:Microsoft.AspNetCore.Authorization.AuthorizationPolicy" /> from the given <paramref name="policyName" />
         /// </summary>
