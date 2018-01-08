@@ -26,7 +26,7 @@ namespace PolicyServer.Local
         /// <value>
         /// The roles.
         /// </value>
-        public List<string> Roles { get; set; } = new List<string>();
+        public List<string> Roles { get; internal set; } = new List<string>();
 
         internal bool Evaluate(IEnumerable<string> roles)
         {

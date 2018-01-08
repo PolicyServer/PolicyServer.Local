@@ -27,7 +27,7 @@ namespace PolicyServer.Local
         /// <value>
         /// The subjects.
         /// </value>
-        public List<string> Subjects { get; set; } = new List<string>();
+        public List<string> Subjects { get; internal set; } = new List<string>();
 
         /// <summary>
         /// Gets the identity roles.
