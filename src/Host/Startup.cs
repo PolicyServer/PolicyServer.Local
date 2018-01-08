@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Brock Allen, Dominick Baier, Michele Leroux Bustamante. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
+using Host.AspNetCorePolicy;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,6 +40,9 @@ namespace Host
             // this sets up the PolicyServer client library and policy provider - configuration is loaded from appsettings.json
             services.AddPolicyServerClient(Configuration.GetSection("Policy"))
                 .AddAuthorizationPermissionPolicies();
+
+            // this adds the necessary handler for our custom medication requirement
+            services.AddTransient<IAuthorizationHandler, MedicationRequirementHandler>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

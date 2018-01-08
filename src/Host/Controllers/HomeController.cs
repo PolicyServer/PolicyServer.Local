@@ -5,16 +5,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 using PolicyServer.Client;
+using Host.AspNetCorePolicy;
 
 namespace Host.Controllers
 {
     public class HomeController : Controller
     {
         private readonly PolicyServerClient _client;
+        private readonly IAuthorizationService _authz;
 
-        public HomeController(PolicyServerClient client)
+        public HomeController(PolicyServerClient client, IAuthorizationService authz)
         {
             _client = client;
+            _authz = authz;
         }
 
         [AllowAnonymous]
@@ -47,6 +50,19 @@ namespace Host.Controllers
         {
             // or imperatively
             var canPerformSurgery = await _client.HasPermissionAsync(User, "PerformSurgery");
+
+            return View("success");
+        }
+
+        public async Task<IActionResult> PrescribeMedication(string name, int amount)
+        {
+            var requirement = new MedicationRequirement
+            {
+                Amount = amount,
+                MedicationName = name
+            };
+            var result = await _authz.AuthorizeAsync(User, null, requirement);
+            if (!result.Succeeded) return Forbid();
 
             return View("success");
         }
