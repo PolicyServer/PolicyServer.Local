@@ -5,9 +5,25 @@ using System.Collections.Generic;
 
 namespace PolicyServer.Client
 {
+    /// <summary>
+    /// The result of a policy evaluation
+    /// </summary>
     public class PolicyResult
     {
-        public IEnumerable<string> Roles { get; set; }
-        public IEnumerable<string> Permissions { get; set; }
+        /// <summary>
+        /// Gets the roles.
+        /// </summary>
+        /// <value>
+        /// The roles.
+        /// </value>
+        public IEnumerable<string> Roles { get; internal set; }
+
+        /// <summary>
+        /// Gets the permissions.
+        /// </summary>
+        /// <value>
+        /// The permissions.
+        /// </value>
+        public IEnumerable<string> Permissions { get; internal set; }
     }
 }

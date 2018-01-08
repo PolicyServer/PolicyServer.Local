@@ -9,31 +9,45 @@ using PolicyServer.Client;
 
 namespace PolicyServer.AspNetCore
 {
+    /// <summary>
+    /// Middleware to automatically turn application roles and permissions into claims
+    /// </summary>
     public class PolicyServerMiddleware
     {
         private readonly RequestDelegate _next;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PolicyServerMiddleware"/> class.
+        /// </summary>
+        /// <param name="next">The next.</param>
         public PolicyServerMiddleware(RequestDelegate next)
         {
             _next = next;
         }
 
-        public async Task Invoke(HttpContext ctx, PolicyServerClient client)
+        /// <summary>
+        /// Invoke
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="client">The client.</param>
+        /// <returns></returns>
+        public async Task Invoke(HttpContext context, PolicyServerClient client)
         {
-            if (ctx.User.Identity.IsAuthenticated)
+            if (context.User.Identity.IsAuthenticated)
             {
-                var policy = await client.EvaluateAsync(ctx.User);
+                var policy = await client.EvaluateAsync(context.User);
+
                 var roleClaims = policy.Roles.Select(x => new Claim("role", x));
                 var permissionClaims = policy.Permissions.Select(x => new Claim("permission", x));
 
-                // todo: make scheme configurable
                 var id = new ClaimsIdentity("PolicyServerMiddleware", "name", "role");
                 id.AddClaims(roleClaims);
                 id.AddClaims(permissionClaims);
-                ctx.User.AddIdentity(id);
+
+                context.User.AddIdentity(id);
             }
 
-            await _next(ctx);
+            await _next(context);
         }
     }
 }

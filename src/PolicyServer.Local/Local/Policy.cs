@@ -10,16 +10,32 @@ using PolicyServer.Client;
 
 namespace PolicyServer.Local
 {
+    /// <summary>
+    /// Models a policy
+    /// </summary>
     public class Policy
     {
-        public List<Role> Roles { get; set; } = new List<Role>();
-        public List<Permission> Permissions { get; set; } = new List<Permission>();
+        /// <summary>
+        /// Gets the roles.
+        /// </summary>
+        /// <value>
+        /// The roles.
+        /// </value>
+        public List<Role> Roles { get; internal set; } = new List<Role>();
+
+        /// <summary>
+        /// Gets the permissions.
+        /// </summary>
+        /// <value>
+        /// The permissions.
+        /// </value>
+        public List<Permission> Permissions { get; internal set; } = new List<Permission>();
         
         internal Task<PolicyResult> EvaluateAsync(ClaimsPrincipal user)
         {
             if (user == null) throw new ArgumentNullException(nameof(user));
 
-            var roles = Roles.Where(x=>x.Evaluate(user)).Select(x=>x.Name).ToArray();
+            var roles = Roles.Where(x=> x.Evaluate(user)).Select(x => x.Name).ToArray();
             var permissions = Permissions.Where(x => x.Evaluate(roles)).Select(x => x.Name).ToArray();
 
             var result = new PolicyResult()

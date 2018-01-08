@@ -7,10 +7,26 @@ using System.Linq;
 
 namespace PolicyServer.Local
 {
+    /// <summary>
+    /// Models a permission
+    /// </summary>
     public class Permission
     {
-        public string Name { get; set; }
-        public List<string> Roles { get; set; } = new List<string>();
+        /// <summary>
+        /// Gets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
+        public string Name { get; internal set; }
+
+        /// <summary>
+        /// Gets the roles.
+        /// </summary>
+        /// <value>
+        /// The roles.
+        /// </value>
+        public List<string> Roles { get; internal set; } = new List<string>();
 
         internal bool Evaluate(IEnumerable<string> roles)
         {

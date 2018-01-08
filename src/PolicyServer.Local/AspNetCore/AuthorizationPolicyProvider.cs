@@ -8,11 +8,21 @@ using PolicyServer.Client;
 
 namespace Microsoft.AspNetCore.Authorization
 {
+    /// <summary>
+    /// Authorization policy provider to automatically turn all permissions of a user into a ASP.NET Core authorization policy
+    /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Authorization.DefaultAuthorizationPolicyProvider" />
     public class AuthorizationPolicyProvider : DefaultAuthorizationPolicyProvider
     {
         private readonly PolicyServerClient _client;
         private readonly IHttpContextAccessor _contextAccessor;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AuthorizationPolicyProvider"/> class.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <param name="client">The client.</param>
+        /// <param name="contextAccessor">The context accessor.</param>
         public AuthorizationPolicyProvider(
             IOptions<AuthorizationOptions> options,
             PolicyServerClient client,
@@ -22,9 +32,17 @@ namespace Microsoft.AspNetCore.Authorization
             _contextAccessor = contextAccessor;
         }
 
-        public static AuthorizationPolicy Allowed { get; set; } = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-        public static AuthorizationPolicy Denied { get; set; } = new AuthorizationPolicyBuilder().RequireAssertion(c=>false).Build();
 
+        //public static AuthorizationPolicy Allowed { get; set; } = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+        //public static AuthorizationPolicy Denied { get; set; } = new AuthorizationPolicyBuilder().RequireAssertion(c=>false).Build();
+
+        /// <summary>
+        /// Gets a <see cref="T:Microsoft.AspNetCore.Authorization.AuthorizationPolicy" /> from the given <paramref name="policyName" />
+        /// </summary>
+        /// <param name="policyName">The policy name to retrieve.</param>
+        /// <returns>
+        /// The named <see cref="T:Microsoft.AspNetCore.Authorization.AuthorizationPolicy" />.
+        /// </returns>
         public async override Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
         {
             // check static policies first
@@ -41,7 +59,7 @@ namespace Microsoft.AspNetCore.Authorization
         }
     }
 
-    public class PermissionRequirement : IAuthorizationRequirement
+    internal class PermissionRequirement : IAuthorizationRequirement
     {
         public PermissionRequirement(string name)
         {
@@ -50,7 +68,7 @@ namespace Microsoft.AspNetCore.Authorization
         public string Name { get; private set; }
     }
 
-    public class PermissionHandler : AuthorizationHandler<PermissionRequirement>
+    internal class PermissionHandler : AuthorizationHandler<PermissionRequirement>
     {
         private readonly PolicyServerClient _client;
 
@@ -67,5 +85,4 @@ namespace Microsoft.AspNetCore.Authorization
             }
         }
     }
-
 }
