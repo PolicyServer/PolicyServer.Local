@@ -12,7 +12,7 @@ namespace PolicyServer.Client
     /// <summary>
     /// PolicyServer client
     /// </summary>
-    public class PolicyServerClient
+    public class PolicyServerClient : IPolicyServerClient
     {
         private readonly Policy _policy;
 

@@ -9,9 +9,9 @@ namespace Host.AspNetCorePolicy
 {
     public class MedicationRequirementHandler : AuthorizationHandler<MedicationRequirement>
     {
-        private readonly PolicyServerClient _client;
+        private readonly IPolicyServerClient _client;
 
-        public MedicationRequirementHandler(PolicyServerClient client)
+        public MedicationRequirementHandler(IPolicyServerClient client)
         {
             _client = client;
         }
@@ -32,5 +32,4 @@ namespace Host.AspNetCorePolicy
             }
         }
     }
-
 }

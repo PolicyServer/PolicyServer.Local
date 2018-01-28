@@ -11,10 +11,10 @@ namespace Host.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly PolicyServerClient _client;
+        private readonly IPolicyServerClient _client;
         private readonly IAuthorizationService _authz;
 
-        public HomeController(PolicyServerClient client, IAuthorizationService authz)
+        public HomeController(IPolicyServerClient client, IAuthorizationService authz)
         {
             _client = client;
             _authz = authz;

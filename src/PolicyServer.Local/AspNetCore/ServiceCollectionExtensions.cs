@@ -25,7 +25,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.Configure<Policy>(configuration);
             services.AddSingleton(r => r.GetRequiredService<IOptions<Policy>>().Value);
 
-            services.AddTransient<PolicyServerClient>();
+            services.AddTransient<IPolicyServerClient, PolicyServerClient>();
 
             return new PolicyServerBuilder(services);
         }

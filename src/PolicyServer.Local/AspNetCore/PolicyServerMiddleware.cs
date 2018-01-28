@@ -31,7 +31,7 @@ namespace PolicyServer.AspNetCore
         /// <param name="context">The context.</param>
         /// <param name="client">The client.</param>
         /// <returns></returns>
-        public async Task Invoke(HttpContext context, PolicyServerClient client)
+        public async Task Invoke(HttpContext context, IPolicyServerClient client)
         {
             if (context.User.Identity.IsAuthenticated)
             {

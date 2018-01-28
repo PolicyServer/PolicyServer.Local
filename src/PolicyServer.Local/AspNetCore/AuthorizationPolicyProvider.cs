@@ -14,7 +14,7 @@ namespace Microsoft.AspNetCore.Authorization
     /// <seealso cref="Microsoft.AspNetCore.Authorization.DefaultAuthorizationPolicyProvider" />
     public class AuthorizationPolicyProvider : DefaultAuthorizationPolicyProvider
     {
-        private readonly PolicyServerClient _client;
+        private readonly IPolicyServerClient _client;
         private readonly IHttpContextAccessor _contextAccessor;
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Microsoft.AspNetCore.Authorization
         /// <param name="contextAccessor">The context accessor.</param>
         public AuthorizationPolicyProvider(
             IOptions<AuthorizationOptions> options,
-            PolicyServerClient client,
+            IPolicyServerClient client,
             IHttpContextAccessor contextAccessor) : base(options)
         {
             _client = client;
@@ -67,9 +67,9 @@ namespace Microsoft.AspNetCore.Authorization
 
     internal class PermissionHandler : AuthorizationHandler<PermissionRequirement>
     {
-        private readonly PolicyServerClient _client;
+        private readonly IPolicyServerClient _client;
 
-        public PermissionHandler(PolicyServerClient client)
+        public PermissionHandler(IPolicyServerClient client)
         {
             _client = client;
         }
