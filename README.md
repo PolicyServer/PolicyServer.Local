@@ -98,14 +98,14 @@ Fist, you need to register the PolicyServer client with the DI system. This is w
 services.AddPolicyServerClient(Configuration.GetSection("Policy"));
 ```
 
-After that you can inject the `PolicyServerClient` anywhere into your application code, e.g.:
+After that you can inject the `IPolicyServerClient` anywhere into your application code, e.g.:
 
 ```csharp
 public class HomeController : Controller
 {
-    private readonly PolicyServerClient _client;
+    private readonly IPolicyServerClient _client;
 
-    public HomeController(PolicyServerClient client)
+    public HomeController(IPolicyServerClient client)
     {
         _client = client;
     }
@@ -144,7 +144,7 @@ Instead of using the `PolicyServerClient` class directly, you might prefer a pro
 A middleware (registered with `UsePolicyServerClaimsTransformation`) is provided for this purpose, and runs on every request to map the user's authorization data into claims:
 
 ```csharp
-public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+public void Configure(IApplicationBuilder app)
 {
     app.UseAuthentication();
     app.UsePolicyServerClaimsTransformation();
