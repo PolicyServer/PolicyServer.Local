@@ -17,27 +17,30 @@
     </dl>
 }
 
-<h1>Policy Results</h1>
-@if (Model.Roles.Any())
+@if (Model != null)
 {
-    <h2>Roles</h2>
-    <ul>
-        @foreach (var role in Model.Roles)
-        {
-            <li>@role</li>
-        }
-    </ul>
-}
+    <h1>Policy Results</h1>
+    @if (Model.Roles.Any())
+    {
+        <h2>Roles</h2>
+        <ul>
+            @foreach (var role in Model.Roles)
+            {
+                <li>@role</li>
+            }
+        </ul>
+    }
 
-@if (Model.Permissions.Any())
-{
-    <h2>Permission</h2>
-    <ul>
-        @foreach (var perm in Model.Permissions)
-        {
-            <li>@perm</li>
-        }
-    </ul>
+    @if (Model.Permissions.Any())
+    {
+        <h2>Permission</h2>
+        <ul>
+            @foreach (var perm in Model.Permissions)
+            {
+                <li>@perm</li>
+            }
+        </ul>
+    }
 }
 
 <h1>Operations</h1>
