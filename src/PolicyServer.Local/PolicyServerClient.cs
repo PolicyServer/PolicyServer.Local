@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using PolicyServer.Local;
 
 namespace PolicyServer.Client
@@ -20,9 +21,9 @@ namespace PolicyServer.Client
         /// Initializes a new instance of the <see cref="PolicyServerClient"/> class.
         /// </summary>
         /// <param name="policy">The policy.</param>
-        public PolicyServerClient(Policy policy)
+        public PolicyServerClient(IOptionsMonitor<Policy> policy)
         {
-            _policy = policy;
+            _policy = policy.CurrentValue;
         }
 
         /// <summary>
