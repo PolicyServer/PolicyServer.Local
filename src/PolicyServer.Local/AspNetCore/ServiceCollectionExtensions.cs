@@ -23,8 +23,8 @@ namespace Microsoft.Extensions.DependencyInjection
         public static PolicyServerBuilder AddPolicyServerClient(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<Policy>(configuration);
-            services.AddTransient(r => r.GetRequiredService<IOptionsMonitor<Policy>>().CurrentValue);
-            services.AddTransient<IPolicyServerClient, PolicyServerClient>();
+            services.AddScoped(r => r.GetRequiredService<IOptionsSnapshot<Policy>>().Value);
+            services.AddScoped<IPolicyServerClient, PolicyServerClient>();
 
             return new PolicyServerBuilder(services);
         }

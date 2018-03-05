@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using PolicyServer.Client;
 
@@ -21,15 +22,13 @@ namespace Microsoft.AspNetCore.Authorization
         /// Initializes a new instance of the <see cref="AuthorizationPolicyProvider"/> class.
         /// </summary>
         /// <param name="options">The options.</param>
-        /// <param name="client">The client.</param>
         /// <param name="contextAccessor">The context accessor.</param>
         public AuthorizationPolicyProvider(
             IOptions<AuthorizationOptions> options,
-            IPolicyServerClient client,
             IHttpContextAccessor contextAccessor) : base(options)
         {
-            _client = client;
             _contextAccessor = contextAccessor;
+            _client = _contextAccessor.HttpContext?.RequestServices.GetService<IPolicyServerClient>();
         }
 
 
@@ -69,9 +68,9 @@ namespace Microsoft.AspNetCore.Authorization
     {
         private readonly IPolicyServerClient _client;
 
-        public PermissionHandler(IPolicyServerClient client)
+        public PermissionHandler(IHttpContextAccessor contextAccessor)
         {
-            _client = client;
+            _client = contextAccessor.HttpContext?.RequestServices.GetService<IPolicyServerClient>();
         }
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
