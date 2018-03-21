@@ -14,24 +14,13 @@ namespace Microsoft.AspNetCore.Authorization
     /// <seealso cref="Microsoft.AspNetCore.Authorization.DefaultAuthorizationPolicyProvider" />
     public class AuthorizationPolicyProvider : DefaultAuthorizationPolicyProvider
     {
-        private readonly IPolicyServerClient _client;
-        private readonly IHttpContextAccessor _contextAccessor;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthorizationPolicyProvider"/> class.
         /// </summary>
         /// <param name="options">The options.</param>
-        /// <param name="client">The client.</param>
-        /// <param name="contextAccessor">The context accessor.</param>
-        public AuthorizationPolicyProvider(
-            IOptions<AuthorizationOptions> options,
-            IPolicyServerClient client,
-            IHttpContextAccessor contextAccessor) : base(options)
+        public AuthorizationPolicyProvider(IOptions<AuthorizationOptions> options) : base(options)
         {
-            _client = client;
-            _contextAccessor = contextAccessor;
         }
-
 
         /// <summary>
         /// Gets a <see cref="T:Microsoft.AspNetCore.Authorization.AuthorizationPolicy" /> from the given <paramref name="policyName" />

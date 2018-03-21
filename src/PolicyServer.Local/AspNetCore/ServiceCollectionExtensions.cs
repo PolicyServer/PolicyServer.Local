@@ -24,6 +24,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.Configure<Policy>(configuration);
             services.AddTransient<IPolicyServerClient, PolicyServerClient>();
+            services.AddScoped(provider=>provider.GetRequiredService<IOptionsSnapshot<Policy>>().Value);
 
             return new PolicyServerBuilder(services);
         }

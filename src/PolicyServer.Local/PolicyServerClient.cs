@@ -21,9 +21,9 @@ namespace PolicyServer.Client
         /// Initializes a new instance of the <see cref="PolicyServerClient"/> class.
         /// </summary>
         /// <param name="policy">The policy.</param>
-        public PolicyServerClient(IOptionsMonitor<Policy> policy)
+        public PolicyServerClient(Policy policy)
         {
-            _policy = policy.CurrentValue;
+            _policy = policy;
         }
 
         /// <summary>
