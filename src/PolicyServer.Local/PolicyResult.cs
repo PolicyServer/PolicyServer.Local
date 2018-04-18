@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace PolicyServer.Client
+namespace PolicyServer.Runtime.Client
 {
     /// <summary>
     /// The result of a policy evaluation

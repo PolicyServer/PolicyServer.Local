@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <VersionPrefix>1.0.1</VersionPrefix>
+    <VersionPrefix>1.0.2</VersionPrefix>
 
     <Authors>Brock Allen;Dominick Baier;Michele Leroux-Bustamante</Authors>
     <Description>free OSS version of PolicyServer</Description>

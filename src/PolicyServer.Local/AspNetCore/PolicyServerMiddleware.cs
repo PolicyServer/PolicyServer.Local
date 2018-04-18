@@ -5,22 +5,21 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using PolicyServer.Client;
 
-namespace PolicyServer.AspNetCore
+namespace PolicyServer.Runtime.Client.AspNetCore
 {
     /// <summary>
     /// Middleware to automatically turn application roles and permissions into claims
     /// </summary>
-    public class PolicyServerMiddleware
+    public class PolicyServerClaimsMiddleware
     {
         private readonly RequestDelegate _next;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PolicyServerMiddleware"/> class.
+        /// Initializes a new instance of the <see cref="PolicyServerClaimsMiddleware"/> class.
         /// </summary>
         /// <param name="next">The next.</param>
-        public PolicyServerMiddleware(RequestDelegate next)
+        public PolicyServerClaimsMiddleware(RequestDelegate next)
         {
             _next = next;
         }
@@ -31,7 +30,7 @@ namespace PolicyServer.AspNetCore
         /// <param name="context">The context.</param>
         /// <param name="client">The client.</param>
         /// <returns></returns>
-        public async Task Invoke(HttpContext context, IPolicyServerClient client)
+        public async Task Invoke(HttpContext context, IPolicyServerRuntimeClient client)
         {
             if (context.User.Identity.IsAuthenticated)
             {

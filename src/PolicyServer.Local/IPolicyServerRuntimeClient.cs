@@ -4,12 +4,12 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace PolicyServer.Client
+namespace PolicyServer.Runtime.Client
 {
     /// <summary>
     /// Interface for PolicyServer client
     /// </summary>
-    public interface IPolicyServerClient
+    public interface IPolicyServerRuntimeClient
     {
         /// <summary>
         /// Evaluates the policy for a given user.

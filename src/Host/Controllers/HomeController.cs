@@ -4,17 +4,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
-using PolicyServer.Client;
 using Host.AspNetCorePolicy;
+using PolicyServer.Runtime.Client;
 
 namespace Host.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IPolicyServerClient _client;
+        private readonly IPolicyServerRuntimeClient _client;
         private readonly IAuthorizationService _authz;
 
-        public HomeController(IPolicyServerClient client, IAuthorizationService authz)
+        public HomeController(IPolicyServerRuntimeClient client, IAuthorizationService authz)
         {
             _client = client;
             _authz = authz;

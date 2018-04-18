@@ -2,11 +2,10 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
-using PolicyServer.Client;
 
-namespace Microsoft.AspNetCore.Authorization
+namespace PolicyServer.Runtime.Client.AspNetCore
 {
     /// <summary>
     /// Authorization policy provider to automatically turn all permissions of a user into a ASP.NET Core authorization policy
@@ -56,9 +55,9 @@ namespace Microsoft.AspNetCore.Authorization
 
     internal class PermissionHandler : AuthorizationHandler<PermissionRequirement>
     {
-        private readonly IPolicyServerClient _client;
+        private readonly IPolicyServerRuntimeClient _client;
 
-        public PermissionHandler(IPolicyServerClient client)
+        public PermissionHandler(IPolicyServerRuntimeClient client)
         {
             _client = client;
         }

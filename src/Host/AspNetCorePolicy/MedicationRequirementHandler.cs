@@ -3,15 +3,15 @@
 
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using PolicyServer.Client;
+using PolicyServer.Runtime.Client;
 
 namespace Host.AspNetCorePolicy
 {
     public class MedicationRequirementHandler : AuthorizationHandler<MedicationRequirement>
     {
-        private readonly IPolicyServerClient _client;
+        private readonly IPolicyServerRuntimeClient _client;
 
-        public MedicationRequirementHandler(IPolicyServerClient client)
+        public MedicationRequirementHandler(IPolicyServerRuntimeClient client)
         {
             _client = client;
         }

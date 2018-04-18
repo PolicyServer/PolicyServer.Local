@@ -5,23 +5,22 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
 using PolicyServer.Local;
 
-namespace PolicyServer.Client
+namespace PolicyServer.Runtime.Client
 {
     /// <summary>
     /// PolicyServer client
     /// </summary>
-    public class PolicyServerClient : IPolicyServerClient
+    public class PolicyServerRuntimeClient : IPolicyServerRuntimeClient
     {
         private readonly Policy _policy;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PolicyServerClient"/> class.
+        /// Initializes a new instance of the <see cref="PolicyServerRuntimeClient"/> class.
         /// </summary>
         /// <param name="policy">The policy.</param>
-        public PolicyServerClient(Policy policy)
+        public PolicyServerRuntimeClient(Policy policy)
         {
             _policy = policy;
         }

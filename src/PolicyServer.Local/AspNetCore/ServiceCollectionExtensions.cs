@@ -3,9 +3,8 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using PolicyServer.AspNetCore;
-using PolicyServer.Client;
 using PolicyServer.Local;
+using PolicyServer.Runtime.Client;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -23,8 +22,8 @@ namespace Microsoft.Extensions.DependencyInjection
         public static PolicyServerBuilder AddPolicyServerClient(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<Policy>(configuration);
-            services.AddTransient<IPolicyServerClient, PolicyServerClient>();
-            services.AddScoped(provider=>provider.GetRequiredService<IOptionsSnapshot<Policy>>().Value);
+            services.AddTransient<IPolicyServerRuntimeClient, PolicyServerRuntimeClient>();
+            services.AddScoped(provider => provider.GetRequiredService<IOptionsSnapshot<Policy>>().Value);
 
             return new PolicyServerBuilder(services);
         }

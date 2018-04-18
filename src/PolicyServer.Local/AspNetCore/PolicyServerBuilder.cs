@@ -4,8 +4,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using PolicyServer.Runtime.Client.AspNetCore;
 
-namespace PolicyServer.AspNetCore
+namespace PolicyServer.Runtime.Client
 {
     /// <summary>
     /// Helper object to build the PolicyServer DI configuration
