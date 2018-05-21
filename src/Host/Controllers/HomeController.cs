@@ -32,7 +32,7 @@ namespace Host.Controllers
             return View(result);
         }
 
-        // if you are using the UsePolicyServerClaimsTransformation middleware, roles are mapped to claims
+        // if you are using the UsePolicyServerClaims middleware, roles are mapped to claims
         // this allows using the classic authorize attribute
         [Authorize(Roles = "nurse")]
         public async Task<IActionResult> NursesOnly()
