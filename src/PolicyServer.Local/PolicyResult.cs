@@ -16,7 +16,7 @@ namespace PolicyServer.Runtime.Client
         /// <value>
         /// The roles.
         /// </value>
-        public IEnumerable<string> Roles { get; internal set; }
+        public IEnumerable<string> Roles { get; set; }
 
         /// <summary>
         /// Gets the permissions.
@@ -24,6 +24,6 @@ namespace PolicyServer.Runtime.Client
         /// <value>
         /// The permissions.
         /// </value>
-        public IEnumerable<string> Permissions { get; internal set; }
+        public IEnumerable<string> Permissions { get; set; }
     }
 }
