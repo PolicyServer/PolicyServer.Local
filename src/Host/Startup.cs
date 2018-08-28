@@ -5,6 +5,7 @@ using Host.AspNetCorePolicy;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,7 +31,15 @@ namespace Host
                     .RequireAuthenticatedUser()
                     .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
-            });
+
+                // Known bug in MVC 2.1 that breaks authorization policy providers
+                // This is because setting the compatibility version below to 2.1 sets `AllowCombiningAuthorizeFilters` to true, exposing a bug
+                // https://github.com/aspnet/Mvc/issues/7809
+                options.AllowCombiningAuthorizeFilters = false;
+            })
+            // Using `SetCompatibilityVersion()` is recommended for Core 2.1 and onward.
+            // https://blogs.msdn.microsoft.com/webdev/2018/02/27/introducing-compatibility-version-in-mvc/
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // this sets up authentication - for this demo we simply use a local cookie
             // typically authentication would be done using an external provider
