@@ -1,10 +1,13 @@
 # PolicyServer (local version)
 We've been talking about separation of concerns of authentication and authorization quite a bit in the past (see the [blog post](https://leastprivilege.com/2016/12/16/identity-vs-permissions/) that started all and the [video](https://vimeo.com/223982185) that showed off our first prototype).
-As a result, we have developed a commercial product called [PolicyServer](http://solliance.net/products/policyserver).
+As a result, we have developed a commercial product called PolicyServer as part of a joint venture with [Solliance](https://solliance.net). Here are a few links to the product and pricing page: 
 
-This repository contains a free, open source, and simplified version of the PolicyServer product, but has all the necessary code to implement the authorization pattern we are recommending.
+* [PolicyServer Overview](https://solliance.net/products/policyserver)
+* [PolicyServer Pricing](https://solliance.net/products/policyserverpricing)
 
-This open source library does not have the advanced features of the PolicyServer product like hierarchical policies, client/server separation, management APIs and UI, caching, auditing etc., but is syntax-compatible with its "big brother". This allows an upgrade path with minimal code changes.
+In this repository we have provided a free, open source, and simplified version of the authorization pattern we propose - with the necessary code to create a simple implementation in your applications. 
+
+> NOTE: This open source library does not have the advanced features of the PolicyServer product like hierarchical policies, client/server separation, management APIs and UI, caching, auditing etc., but the client library is syntax-compatible with its "big brother" in terms of integration to your applications. This allows an upgrade path with minimal code changes if you start with this client library.
 
 ## Defining an authorization policy
 The authorization policy is defined as a JSON document (typically in `appsettings.json`). In the policy you can define two things
