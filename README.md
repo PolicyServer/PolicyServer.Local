@@ -95,7 +95,7 @@ In the permissions element you can define permissions, and which roles they are 
 ```
 
 ### Using the PolicyServer client library in your ASP.NET Core application
-Fist, you need to register the PolicyServer client with the DI system. This is where you specify the configuration section that holds your policy.
+First, you need to register the PolicyServer client with the DI system. This is where you specify the configuration section that holds your policy.
 
 ```csharp
 services.AddPolicyServerClient(Configuration.GetSection("Policy"));
