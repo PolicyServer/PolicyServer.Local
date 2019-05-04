@@ -5,7 +5,7 @@ As a result, we have developed a commercial product called PolicyServer as part 
 * [PolicyServer Overview](https://solliance.net/products/policyserver)
 * [PolicyServer Pricing](https://solliance.net/products/policyserverpricing)
 
-In this repository we have provided a free, open source, and simplified version of the authorization pattern we propose - with the necessary code to create a simple implementation in your applications. 
+In this repository we have provided a free, open source, and simplified version of the authorization pattern we propose - with the necessary code to create a simple implementation in your applications. This is meant to be a sample, if you find this approach useful, feel free to copy the code and use it in your own projects.
 
 > NOTE: This open source library does not have the advanced features of the PolicyServer product like hierarchical policies, client/server separation, management APIs and UI, caching, auditing etc., but the client library is syntax-compatible with its "big brother" in terms of integration to your applications. This allows an upgrade path with minimal code changes if you start with this client library.
 
