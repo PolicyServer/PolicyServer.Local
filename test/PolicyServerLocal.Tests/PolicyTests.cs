@@ -22,7 +22,7 @@ namespace PolicyServerLocal.Tests
         public void Evaluate_should_require_user()
         {
             Func<Task> a = () => _subject.EvaluateAsync(null);
-            a.ShouldThrow<ArgumentNullException>();
+            a.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -38,7 +38,7 @@ namespace PolicyServerLocal.Tests
 
             var result = await _subject.EvaluateAsync(user);
 
-            result.Roles.ShouldAllBeEquivalentTo(new[] { "a", "c" });
+            result.Roles.Should().BeEquivalentTo(new[] { "a", "c" });
         }
 
         [Fact]
@@ -69,7 +69,7 @@ namespace PolicyServerLocal.Tests
 
             var result = await _subject.EvaluateAsync(user);
 
-            result.Roles.ShouldAllBeEquivalentTo(new[] { "a" });
+            result.Roles.Should().BeEquivalentTo(new[] { "a" });
         }
 
         [Fact]
@@ -89,7 +89,7 @@ namespace PolicyServerLocal.Tests
 
             var result = await _subject.EvaluateAsync(user);
 
-            result.Permissions.ShouldAllBeEquivalentTo(new[] { "a", "c" });
+            result.Permissions.Should().BeEquivalentTo(new[] { "a", "c" });
         }
 
         [Fact]
@@ -126,7 +126,7 @@ namespace PolicyServerLocal.Tests
 
             var result = await _subject.EvaluateAsync(user);
 
-            result.Permissions.ShouldAllBeEquivalentTo(new[] { "a" });
+            result.Permissions.Should().BeEquivalentTo(new[] { "a" });
         }
 
         [Fact]

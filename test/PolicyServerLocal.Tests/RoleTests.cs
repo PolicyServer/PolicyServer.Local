@@ -21,7 +21,7 @@ namespace PolicyServerLocal.Tests
         public void Evaluate_should_require_user()
         {
             Action a = ()=>_subject.Evaluate(null);
-            a.ShouldThrow<ArgumentNullException>();
+            a.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
