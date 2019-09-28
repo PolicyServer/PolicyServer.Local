@@ -5,7 +5,6 @@ using Host.AspNetCorePolicy;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,15 +21,9 @@ namespace Host
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options =>
-            {
-                // this sets up a default authorization policy for the application
-                // in this case, authenticated users are required (besides controllers/actions that have [AllowAnonymous]
-                var policy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .Build();
-                options.Filters.Add(new AuthorizeFilter(policy));
-            });
+            // `AddControllersWithViews()` Calls AddAuthorization under the hood.
+            // Below, in the call to `UseEndpoints(...)` we require authorization to all controllers (besides controllers/actions that have `[AllowAnonymous]`).
+            services.AddControllersWithViews();
 
             // this sets up authentication - for this demo we simply use a local cookie
             // typically authentication would be done using an external provider
@@ -45,10 +38,14 @@ namespace Host
             services.AddTransient<IAuthorizationHandler, MedicationRequirementHandler>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseDeveloperExceptionPage();
+
+            app.UseRouting();
+
             app.UseAuthentication();
+            app.UseAuthorization();
 
             // add this middleware to make roles and permissions available as claims
             // this is mainly useful for using the classic [Authorize(Roles="foo")] and IsInRole functionality
@@ -56,7 +53,11 @@ namespace Host
             app.UsePolicyServerClaims();
 
             app.UseStaticFiles();
-            app.UseMvcWithDefaultRoute();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapDefaultControllerRoute().RequireAuthorization();
+            });
         }
     }
 }
