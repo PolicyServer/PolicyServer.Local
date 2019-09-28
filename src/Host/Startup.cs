@@ -42,17 +42,17 @@ namespace Host
         {
             app.UseDeveloperExceptionPage();
 
-            app.UseRouting();
+            app.UseStaticFiles();
 
+            app.UseRouting();
             app.UseAuthentication();
-            app.UseAuthorization();
 
             // add this middleware to make roles and permissions available as claims
             // this is mainly useful for using the classic [Authorize(Roles="foo")] and IsInRole functionality
             // this is not needed if you use the client library directly or the new policy-based authorization framework in ASP.NET Core
             app.UsePolicyServerClaims();
 
-            app.UseStaticFiles();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
