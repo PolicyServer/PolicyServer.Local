@@ -5,10 +5,7 @@ var configuration   = Argument<string>("configuration", "Release");
 // GLOBAL VARIABLES
 ///////////////////////////////////////////////////////////////////////////////
 var packPath            = Directory("./src/PolicyServer.Local");
-var buildArtifacts      = Directory("./artifacts/packages");
-
-var isAppVeyor          = AppVeyor.IsRunningOnAppVeyor;
-var isWindows           = IsRunningOnWindows();
+var buildArtifacts      = Directory("./artifacts");
 
 ///////////////////////////////////////////////////////////////////////////////
 // Clean
@@ -70,15 +67,8 @@ Task("Pack")
     var settings = new DotNetCorePackSettings
     {
         Configuration = configuration,
-        OutputDirectory = buildArtifacts,
-        ArgumentCustomization = args => args.Append("--include-symbols")
+        OutputDirectory = buildArtifacts
     };
-
-    // add build suffix for CI builds
-    if(isAppVeyor)
-    {
-        settings.VersionSuffix = "build" + AppVeyor.Environment.Build.Number.ToString().PadLeft(5,'0');
-    }
 
     DotNetCorePack(packPath, settings);
 });
