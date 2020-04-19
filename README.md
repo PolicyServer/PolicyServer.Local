@@ -9,6 +9,8 @@ In this repository we have provided a free, open source, and simplified version 
 
 > NOTE: This open source library does not have the advanced features of the PolicyServer product like hierarchical policies, client/server separation, management APIs and UI, caching, auditing etc., but the client library is syntax-compatible with its "big brother" in terms of integration to your applications. This allows an upgrade path with minimal code changes if you start with this client library.
 
+**Important** This code-base was our proof of concept for the client-side programming model. We will leave it here for other people that might find this useful, too. It is not maintained anymore!
+
 ## Defining an authorization policy
 The authorization policy is defined as a JSON document (typically in `appsettings.json`). In the policy you can define two things
 
